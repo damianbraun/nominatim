@@ -5,7 +5,8 @@ OSM Nominatim API module
 
 ##Quick Start
 
-```In [1]: from nominatim import Nominatim, NominatimReverse
+```
+In [1]: from nominatim import Nominatim, NominatimReverse
 
 In [2]: nom = Nominatim()
 
@@ -46,4 +47,5 @@ Out[5]:
  u'lon': u'-0.120774554750572',
  u'osm_id': u'97237923',
  u'osm_type': u'way',
- u'place_id': u'64398568'}```
+ u'place_id': u'64398568'}
+ ```
