@@ -22,9 +22,17 @@ code), limit integer (limits number of results)."""
         if limit:
             url += '&limit=' + str(limit)
         self.logger.debug('url:\n' + url)
-        response = urllib2.urlopen(url)
-        result = json.loads(response.read())
-        return result
+        try:
+            response = urllib2.urlopen(url)
+            if response.code == 200:
+                result = json.loads(response.read())
+                return result
+            else:
+                return None
+        except urllib2.URLError:
+            self.logger.info('Server connection problem')
+            return None
+            pass
 
 
 class NominatimReverse(object):
@@ -47,7 +55,15 @@ zoom integer (between from 0 to 18). """
             raise Exception('zoom must be betwen 0 and 18')
         url +='&zoom=' + str(zoom)
         self.logger.debug('url:\n' + url)
-        response = urllib2.urlopen(url)
-        result = json.loads(response.read())
-        return result
+        try:
+            response = urllib2.urlopen(url)
+            if response.code == 200:
+                result = json.loads(response.read())
+                return result
+            else:
+                return None
+        except urllib2.URLError:
+            self.logger.info('Server connection problem')
+            return None
+            pass
 
