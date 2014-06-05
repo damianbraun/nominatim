@@ -3,6 +3,8 @@ nominatim
 
 OSM Nominatim API module
 
+tested with **Python 2.7.6** and **Python 3.4.0**
+
 ##Quick Start
 
 ```
