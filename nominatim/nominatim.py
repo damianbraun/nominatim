@@ -1,6 +1,10 @@
 import json
 import logging
-import urllib2
+import sys
+if sys.version_info.major == 2:
+    import urllib2
+else:
+    import urllib.request as urllib2
 
 
 class Nominatim(object):
@@ -25,7 +29,7 @@ code), limit integer (limits number of results)."""
         try:
             response = urllib2.urlopen(url)
             if response.code == 200:
-                result = json.loads(response.read())
+                result = json.loads(response.read().decode('utf-8'))
                 return result
             else:
                 return None
@@ -58,7 +62,7 @@ zoom integer (between from 0 to 18). """
         try:
             response = urllib2.urlopen(url)
             if response.code == 200:
-                result = json.loads(response.read())
+                result = json.loads(response.read().decode('utf-8'))
                 return result
             else:
                 return None
