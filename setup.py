@@ -8,4 +8,9 @@ setup(
     author_email='brunek5252@gmail.com',
     description='OSM Nominatim API module',
     packages=['nominatim'],
-    platforms='any')
+    platforms='any',
+    classifiers=[
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4'
+        ]
+    )
