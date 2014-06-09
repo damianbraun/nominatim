@@ -5,7 +5,20 @@ OSM Nominatim API module
 
 tested with **Python 2.7.6** and **Python 3.4.0**
 
-##Quick Start
+### Instalation
+
+```
+pip install nominatim
+```
+
+or
+
+```
+git clone https://github.com/damianbraun/nominatim.git
+python setup.py install
+```
+
+### Quick Start
 
 ```
 In [1]: from nominatim import Nominatim, NominatimReverse
