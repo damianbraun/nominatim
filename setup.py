@@ -12,6 +12,9 @@ setup(
     platforms='any',
     classifiers=[
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4'
+        'Programming Language :: Python :: 3.4',
+        'License :: OSI Approved :: Apache Software License',
+        'Natural Language :: English',
+        'Topic :: Software Development :: Libraries :: Python Modules'
         ]
     )
