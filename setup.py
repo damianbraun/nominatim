@@ -6,6 +6,7 @@ setup(
     version='0.1',
     author='Damian Braun',
     author_email='brunek5252@gmail.com',
+    url='https://github.com/damianbraun/nominatim',
     description='OSM Nominatim API module',
     packages=['nominatim'],
     platforms='any',
