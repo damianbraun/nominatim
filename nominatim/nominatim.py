@@ -12,10 +12,12 @@ import json
 import logging
 import sys
 if sys.version_info.major == 2:
-    import urllib2
+    from urllib2 import urlopen
+    from urllib2 import URLError
     from urllib import quote_plus
 else:
-    import urllib.request as urllib2
+    from urllib.request import urlopen
+    from urllib.error import URLError
     from urllib.parse import quote_plus
 
 default_url = 'http://open.mapquestapi.com/nominatim/v1'
@@ -63,15 +65,10 @@ class NominatimRequest(object):
         """
         self.logger.debug('url:\n' + url)
         try:
-            response = urllib2.urlopen(url)
-            if response.code == 200:
-                result = json.loads(response.read().decode('utf-8'))
-                return result
-            else:
-                return None
-        except urllib2.URLError:
+            response = urlopen(url)
+            return json.loads(response.read().decode('utf-8'))
+        except URLError as e:
             self.logger.info('Server connection problem')
-            return None
 
 
 class Nominatim(NominatimRequest):
