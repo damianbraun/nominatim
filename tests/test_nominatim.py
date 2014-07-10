@@ -55,6 +55,15 @@ class TestNominatim(unittest.TestCase):
         self.assertEqual(self.logstream.getvalue().strip().split('\n')[-1],
             'Server connection problem')
 
+    def test_geocoding_wrong_result_format(self):
+        n = Nominatim('http://nominatim.openstreetmap.org/details.php')
+        self.connect_logger(n.logger)
+        location = 'Helsinki'
+        res = n.query(location)
+        self.assertEqual(res, None)
+        self.assertEqual(self.logstream.getvalue().strip().split('\n')[-1],
+            'Server format problem')
+
     def test_reverse_geocoding_default_url(self):
         n = NominatimReverse()
         lat = 60.1666277

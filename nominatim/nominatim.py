@@ -67,8 +67,10 @@ class NominatimRequest(object):
         try:
             response = urlopen(url)
             return json.loads(response.read().decode('utf-8'))
-        except URLError as e:
+        except URLError:
             self.logger.info('Server connection problem')
+        except Exception:
+            self.logger.info('Server format problem')
 
 
 class Nominatim(NominatimRequest):
