@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-
+import logging
+import sys
+if sys.version_info.major == 2:
+    from StringIO import StringIO
+else:
+    from io import StringIO
 from nominatim import *
 
 
@@ -20,6 +25,15 @@ def address_has_city(address, city):
 
 
 class TestNominatim(unittest.TestCase):
+    def setUp(self):
+        self.logstream = StringIO()
+        self.loghandler = logging.StreamHandler(self.logstream)
+
+    def connect_logger(self, logger):
+        self.logger = logger
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.addHandler(self.loghandler)
+
     def test_geocoding_default_url(self):
         n = Nominatim()
         location = 'Helsinki'
@@ -31,6 +45,24 @@ class TestNominatim(unittest.TestCase):
         location = 'Helsinki'
         res = n.query(location)
         self.assertTrue(result_has_osm_id(res, '34914'))
+
+    def test_geocoding_invalid_url(self):
+        n = Nominatim('http://somereally.notexistingurl')
+        self.connect_logger(n.logger)
+        location = 'Helsinki'
+        res = n.query(location)
+        self.assertEqual(res, None)
+        self.assertEqual(self.logstream.getvalue().strip().split('\n')[-1],
+            'Server connection problem')
+
+    def test_geocoding_wrong_result_format(self):
+        n = Nominatim('http://nominatim.openstreetmap.org/details.php')
+        self.connect_logger(n.logger)
+        location = 'Helsinki'
+        res = n.query(location)
+        self.assertEqual(res, None)
+        self.assertEqual(self.logstream.getvalue().strip().split('\n')[-1],
+            'Server format problem')
 
     def test_reverse_geocoding_default_url(self):
         n = NominatimReverse()
@@ -74,3 +106,6 @@ class TestNominatim(unittest.TestCase):
             osm_id = '184705'
             osm_type = 'X'
             res = n.query(osm_id=osm_id, osm_type=osm_type, zoom='city')
+
+    def tearDown(self):
+        self.loghandler.close()
