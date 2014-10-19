@@ -8,13 +8,13 @@ tested with **Python 2.7.6** and **Python 3.4.0**
 
 ### Instalation
 
-```
+```sh
 pip install nominatim
 ```
 
 or
 
-```
+```sh
 git clone https://github.com/damianbraun/nominatim.git
 python setup.py install
 ```
